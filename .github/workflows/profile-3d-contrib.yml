@@ -16,11 +16,14 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: yoshi389111/github-profile-3d-contrib@0.7.1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Generate skyline
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: HatefulRock
-          SETTING_JSON: .github/profile-3d-contrib-settings.json
+        run: python3 scripts/gen_skyline.py profile-3d-contrib/profile-singapore.svg
       - name: Commit & Push
         run: |
           git config user.name github-actions
