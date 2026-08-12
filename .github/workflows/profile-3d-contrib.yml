@@ -15,8 +15,10 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
       - uses: yoshi389111/github-profile-3d-contrib@0.7.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SETTING_JSON: .github/profile-3d-contrib-settings.json
         with:
           username: HatefulRock

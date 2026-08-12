@@ -1,0 +1,17 @@
+{
+  "type": "normal",
+  "fileName": "profile-singapore.svg",
+  "backgroundColor": "#050b1a",
+  "foregroundColor": "#e8f1ff",
+  "strongColor": "#f4b400",
+  "weakColor": "#3a4a66",
+  "radarColor": "#ef3340",
+  "growingAnimation": true,
+  "contribColors": [
+    "#0a1128",
+    "#123a5c",
+    "#1f8a94",
+    "#f4b400",
+    "#ef3340"
+  ]
+}

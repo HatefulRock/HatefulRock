@@ -8,12 +8,8 @@
 
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/HatefulRock/HatefulRock/profile-3d-contrib/profile-3d-contrib/profile-night.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/HatefulRock/HatefulRock/profile-3d-contrib/profile-3d-contrib/profile-day.svg" />
-  <img src="https://raw.githubusercontent.com/HatefulRock/HatefulRock/profile-3d-contrib/profile-3d-contrib/profile-night.svg" alt="3D contribution skyline" width="100%" />
-</picture>
+<img src="https://raw.githubusercontent.com/HatefulRock/HatefulRock/profile-3d-contrib/profile-3d-contrib/profile-singapore.svg" alt="3D contribution skyline, Singapore night palette" width="100%" />
 
 </div>
 
-<sub>skyline regenerates daily from the contribution graph — <a href="https://github.com/yoshi389111/github-profile-3d-contrib">how it works</a></sub>
+<sub>skyline regenerates daily from the contribution graph — navy night sky, Marina Bay gold, flag red for peak days · <a href="https://github.com/yoshi389111/github-profile-3d-contrib">how it works</a></sub>
