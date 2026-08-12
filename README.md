@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=18&pause=1200&color=39FF14&background=0D1117&center=true&vCenter=true&width=700&height=110&lines=%24%20whoami%3Bpierre%20---%20building%20dev%20tools%20%26%20AI%20tooling%3B%24%20ls%20~%2Fprojects%3BFlexTrack%20%20Omnideck%20%20visual-loop%20%20github-skyline-3d%3B%24%20_" alt="terminal" />
+<img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=18&pause=1200&color=39FF14&background=0D1117&center=true&vCenter=true&width=700&height=110&lines=%24%20whoami%3Bpierre%20---%20building%20dev%20tools%20%26%20AI%20tooling%3B%24%20ls%20~%2Fprojects%3BFlexTrack%20%20visual-loop%20%20github-skyline-3d%3B%24%20_" alt="terminal" />
 
 <img src="assets/rule.svg" alt="" width="100%" />
 
@@ -35,8 +35,9 @@ and Python, usually something that collapses a repetitive workflow into one comm
 | :-- | :-- | :-- |
 | [**github-skyline-3d**](https://github.com/HatefulRock/github-skyline-3d) | TypeScript | renders a year of contributions as a 3D skyline (the one below) |
 | [**visual-loop**](https://github.com/HatefulRock/visual-loop) | Python | visual loop plugin for Claude Code |
-| [**FlexTrack**](https://github.com/HatefulRock/FlexTrack) | TypeScript | <!-- one-liner here --> — |
-| [**Omnideck**](https://github.com/HatefulRock/Omnideck) | — | <!-- one-liner here --> in progress |
+| [**FlexTrack**](https://github.com/HatefulRock/FlexTrack) | React Native · Expo | local-first fitness tracker — per-set logging, no account, all on-device |
+
+<sub>· a few more repos are still private — happy to walk through them.</sub>
 
 <br />
 
