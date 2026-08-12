@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
-"""Generate an isometric contribution skyline SVG, self-scaled to the user's
-own max-activity day so it stays legible at any contribution volume."""
+"""Generate a night-skyline SVG from the real contribution calendar, bucketed
+by week and self-scaled to the user's own busiest week -- stays legible at
+any activity level instead of assuming power-user commit volumes."""
 import json
-import math
 import os
 import sys
 import urllib.request
 
-W, H = 900, 480
-TILE_W, TILE_H = 18, 9           # iso tile half-extents
-MAX_BUILDING_H = 150
-MIN_BUILDING_H = 6
-TOP_MARGIN = MAX_BUILDING_H + 24
-SIDE_MARGIN = 40
-BOTTOM_MARGIN = 30
+W, H = 900, 340
+GROUND = 250
+MAX_BUILDING_H = 190
+MIN_BUILDING_H = 10
+SIDE_MARGIN = 30
+DX, DY = 5, -4  # extrusion for the 3D side/top faces
 
 NIGHT_BG = "#050b1a"
 PALETTE = ["#0a1128", "#123a5c", "#1f8a94", "#f4b400", "#ef3340"]  # low -> high
@@ -25,9 +24,7 @@ def fetch_calendar(login, token):
         contributionsCollection {
           contributionCalendar {
             totalContributions
-            weeks {
-              contributionDays { contributionCount date }
-            }
+            weeks { contributionDays { contributionCount date } }
           }
         }
       }
@@ -65,90 +62,79 @@ def poly(pts, fill, opacity=1.0):
     op = f' fill-opacity="{opacity:.2f}"' if opacity != 1.0 else ""
     return f'<polygon points="{p}" fill="{fill}"{op}/>'
 
+def box(x, y, w, h, color):
+    """Extruded block: (x, y) = top-left of the front face."""
+    front = [(x, y), (x + w, y), (x + w, y + h), (x, y + h)]
+    side = [(x + w, y), (x + w + DX, y + DY), (x + w + DX, y + h + DY), (x + w, y + h)]
+    top = [(x, y), (x + DX, y + DY), (x + w + DX, y + DY), (x + w, y)]
+    return "\n".join([
+        poly(side, shade(color, 0.55)),
+        poly(top, shade(color, 1.25)),
+        poly(front, color),
+    ])
+
 def shade(hexcolor, factor):
     hexcolor = hexcolor.lstrip("#")
     r, g, b = int(hexcolor[0:2], 16), int(hexcolor[2:4], 16), int(hexcolor[4:6], 16)
-    r = max(0, min(255, int(r * factor)))
-    g = max(0, min(255, int(g * factor)))
-    b = max(0, min(255, int(b * factor)))
+    r, g, b = (max(0, min(255, int(c * factor))) for c in (r, g, b))
     return f"#{r:02x}{g:02x}{b:02x}"
 
-def iso_building(cx, cy, height, color):
-    """cx,cy = center of the tile's top face (ground level)."""
-    hw, hh = TILE_W / 2, TILE_H / 2
-    top = [(cx, cy - hh), (cx + hw, cy), (cx, cy + hh), (cx - hw, cy)]
-    top_lifted = [(x, y - height) for x, y in top]
-    left = [top[3], top[0], top_lifted[0], top_lifted[3]]
-    right = [top[0], top[1], top_lifted[1], top_lifted[0]]
-    out = [
-        poly(left, shade(color, 0.55)),
-        poly(right, shade(color, 0.85)),
-        poly(top_lifted, shade(color, 1.2)),
-    ]
-    return "\n".join(out)
-
 def render(weeks, total, out_path):
-    n_weeks = len(weeks)
-    max_r = max(len(w["contributionDays"]) for w in weeks) - 1 if weeks else 6
+    weekly = [sum(d["contributionCount"] for d in w["contributionDays"]) for w in weeks]
+    max_week = max(weekly) if weekly else 0
+    n = len(weekly)
 
-    # analytic bounds of the iso-diamond in local (unshifted) coords
-    min_x = (0 - max_r) * (TILE_W / 2)
-    max_x = (n_weeks - 1 - 0) * (TILE_W / 2)
-    min_y = 0
-    max_y = (n_weeks - 1 + max_r) * (TILE_H / 2)
-
-    diamond_w = max_x - min_x
-    diamond_h = max_y - min_y
     avail_w = W - 2 * SIDE_MARGIN
-    scale = min(1.0, avail_w / diamond_w) if diamond_w > 0 else 1.0
+    gap = 3
+    bw = (avail_w - gap * (n - 1)) / n if n else 0
 
-    offset_x = W / 2 - (min_x + max_x) / 2 * scale
-    offset_y = TOP_MARGIN - min_y * scale
-
-    def to_screen(c, r):
-        x = (c - r) * (TILE_W / 2) * scale + offset_x
-        y = (c + r) * (TILE_H / 2) * scale + offset_y
-        return x, y
-
-    parts = []
-    parts.append(f'''<defs>
+    parts = [f'''<defs>
   <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0%" stop-color="#020610"/>
     <stop offset="60%" stop-color="{NIGHT_BG}"/>
     <stop offset="100%" stop-color="#0a1830"/>
   </linearGradient>
+  <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#08131f"/>
+    <stop offset="100%" stop-color="#020509"/>
+  </linearGradient>
+  <linearGradient id="reflFade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="white" stop-opacity="0.28"/>
+    <stop offset="100%" stop-color="white" stop-opacity="0"/>
+  </linearGradient>
+  <mask id="reflMask"><rect x="0" y="0" width="{W}" height="{H}" fill="url(#reflFade)"/></mask>
 </defs>
-<rect x="0" y="0" width="{W}" height="{H}" fill="url(#sky)"/>''')
+<rect x="0" y="0" width="{W}" height="{H}" fill="url(#sky)"/>''']
 
     import random
-    random.seed(3)
-    stars = []
-    for _ in range(50):
-        sx, sy = random.uniform(0, W), random.uniform(10, TOP_MARGIN - 10)
-        r = random.choice([0.6, 0.8, 1.0])
-        stars.append(f'<circle cx="{sx:.1f}" cy="{sy:.1f}" r="{r}" fill="#e8f1ff" opacity="{random.uniform(0.3,0.9):.2f}"/>')
+    random.seed(4)
+    stars = [
+        f'<circle cx="{random.uniform(0,W):.1f}" cy="{random.uniform(6,GROUND-60):.1f}" '
+        f'r="{random.choice([0.6,0.8,1.0])}" fill="#e8f1ff" opacity="{random.uniform(0.3,0.9):.2f}"/>'
+        for _ in range(45)
+    ]
     parts.append("\n".join(stars))
+    parts.append(f'<rect x="0" y="{GROUND}" width="{W}" height="{H-GROUND}" fill="url(#water)"/>')
 
-    all_counts = [d["contributionCount"] for w in weeks for d in w["contributionDays"]]
-    max_count = max(all_counts) if all_counts else 0
-
-    buildings = []
-    for c, w in enumerate(weeks):
-        for r, d in enumerate(w["contributionDays"]):
-            count = d["contributionCount"]
-            color = PALETTE[bucket(count, max_count)]
-            if max_count > 0 and count > 0:
-                h = MIN_BUILDING_H + (count / max_count) * (MAX_BUILDING_H - MIN_BUILDING_H)
+    def buildings_svg():
+        bparts = []
+        for i, wk in enumerate(weekly):
+            color = PALETTE[bucket(wk, max_week)]
+            if max_week > 0 and wk > 0:
+                h = MIN_BUILDING_H + (wk / max_week) * (MAX_BUILDING_H - MIN_BUILDING_H)
             else:
                 h = MIN_BUILDING_H
-            h *= scale
-            cx, cy = to_screen(c, r)
-            buildings.append((c + r, cx, cy, h, color))
+            x = SIDE_MARGIN + i * (bw + gap)
+            y = GROUND - h
+            bparts.append(box(x, y, bw, h, color))
+        return "\n".join(bparts)
 
-    buildings.sort(key=lambda t: t[0])
-    for _, cx, cy, h, color in buildings:
-        parts.append(iso_building(cx, cy, h, color))
-
+    b_svg = buildings_svg()
+    parts.append(b_svg)
+    parts.append(f'''<g transform="translate(0,{GROUND}) scale(1,-0.4) translate(0,{-GROUND})" opacity="0.30" mask="url(#reflMask)">
+{b_svg}
+</g>''')
+    parts.append(f'<rect x="0" y="{GROUND-1}" width="{W}" height="2" fill="#39c3cf" opacity="0.35"/>')
     parts.append(
         f'<text x="{W-16}" y="24" text-anchor="end" font-family="Fira Code, monospace" '
         f'font-size="13" fill="#7a8bab">{total} contributions this year</text>'
@@ -162,28 +148,21 @@ def render(weeks, total, out_path):
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w") as f:
         f.write(svg)
-    print(f"wrote {out_path} ({len(svg)} bytes), max_count={max_count}, total={total}, scale={scale:.2f}")
+    print(f"wrote {out_path} ({len(svg)} bytes), weeks={n}, max_week={max_week}, total={total}")
 
 if __name__ == "__main__":
     demo = "--demo" in sys.argv
     out_path = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else "profile-3d-contrib/profile-singapore.svg"
     if demo:
         import random
-        random.seed(11)
+        random.seed(9)
         weeks = []
         total = 0
         for wk in range(53):
             days = []
             for d in range(7):
                 roll = random.random()
-                if roll < 0.55:
-                    c = 0
-                elif roll < 0.85:
-                    c = random.randint(1, 3)
-                elif roll < 0.97:
-                    c = random.randint(4, 8)
-                else:
-                    c = random.randint(9, 15)
+                c = 0 if roll < 0.6 else random.randint(1, 3) if roll < 0.9 else random.randint(4, 7)
                 total += c
                 days.append({"contributionCount": c, "date": ""})
             weeks.append({"contributionDays": days})
