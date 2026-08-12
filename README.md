@@ -8,6 +8,6 @@
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/HatefulRock/HatefulRock/profile-3d-contrib/profile-3d-contrib/profile-singapore.svg" alt="3D contribution skyline" width="100%" />
+<img src="https://raw.githubusercontent.com/HatefulRock/HatefulRock/main/profile-3d-contrib/profile-singapore.svg" alt="3D contribution skyline" width="100%" />
 
 </div>
