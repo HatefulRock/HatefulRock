@@ -14,20 +14,6 @@ I like to build projects.
 
 <br />
 
-<img src="assets/hdr-stack.svg" alt="$ stack --list" height="34" />
-
-<p>
-<img src="https://img.shields.io/badge/TypeScript-0D1117?style=flat-square&logo=typescript&logoColor=39FF14" alt="TypeScript" />
-<img src="https://img.shields.io/badge/Python-0D1117?style=flat-square&logo=python&logoColor=39FF14" alt="Python" />
-<img src="https://img.shields.io/badge/React-0D1117?style=flat-square&logo=react&logoColor=39FF14" alt="React" />
-<img src="https://img.shields.io/badge/Three.js-0D1117?style=flat-square&logo=threedotjs&logoColor=39FF14" alt="Three.js" />
-<img src="https://img.shields.io/badge/Node.js-0D1117?style=flat-square&logo=nodedotjs&logoColor=39FF14" alt="Node.js" />
-<img src="https://img.shields.io/badge/Vercel-0D1117?style=flat-square&logo=vercel&logoColor=39FF14" alt="Vercel" />
-<img src="https://img.shields.io/badge/Git-0D1117?style=flat-square&logo=git&logoColor=39FF14" alt="Git" />
-</p>
-
-<br />
-
 <img src="assets/hdr-projects.svg" alt="$ ls ~/projects" height="34" />
 
 | project | stack | what it is |
