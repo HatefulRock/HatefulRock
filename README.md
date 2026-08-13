@@ -10,8 +10,7 @@
 
 <img src="assets/hdr-about.svg" alt="$ cat about.md" height="34" />
 
-I build developer tools and the tooling around AI coding agents — mostly TypeScript
-and Python, usually something that collapses a repetitive workflow into one command.
+I like to build projects.
 
 <br />
 
@@ -34,10 +33,10 @@ and Python, usually something that collapses a repetitive workflow into one comm
 | project | stack | what it is |
 | :-- | :-- | :-- |
 | [**github-skyline-3d**](https://github.com/HatefulRock/github-skyline-3d) | TypeScript | renders a year of contributions as a 3D skyline (the one below) |
-| [**visual-loop**](https://github.com/HatefulRock/visual-loop) | Python | visual loop plugin for Claude Code |
-| [**FlexTrack**](https://github.com/HatefulRock/FlexTrack) | React Native · Expo | local-first fitness tracker — per-set logging, no account, all on-device |
+| [**FlexTrack**](https://github.com/HatefulRock/FlexTrack) | React Native · Expo | local-first fitness tracker: per-set logging, all on-device, track the evolution of your workouts |
+| [**Blueprint**](https://blueprint-learn.com) | React  · Python | language learning website |
 
-<sub>· a few more repos are still private — happy to walk through them.</sub>
+<sub>· a few more repos are still private, happy to walk through them.</sub>
 
 <br />
 
