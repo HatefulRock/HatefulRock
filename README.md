@@ -38,17 +38,6 @@ I like to build projects.
 
 <br />
 
-<img src="assets/hdr-stats.svg" alt="$ git log --stat" height="34" />
-
-<div align="center">
-
-<img src="https://github-readme-stats.vercel.app/api?username=HatefulRock&show_icons=true&hide_border=true&bg_color=0D1117&title_color=39FF14&icon_color=39FF14&text_color=c9d1d9&card_width=420" alt="GitHub stats" height="165" />
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=HatefulRock&layout=compact&hide_border=true&bg_color=0D1117&title_color=39FF14&text_color=c9d1d9&card_width=320" alt="Top languages" height="165" />
-
-</div>
-
-<br />
-
 <div align="center">
 
 <img src="assets/rule.svg" alt="" width="100%" />
