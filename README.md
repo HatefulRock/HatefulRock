@@ -10,7 +10,7 @@
 
 <img src="assets/hdr-about.svg" alt="$ cat about.md" height="34" />
 
-I like to build projects.
+I like to build.
 
 <br />
 
