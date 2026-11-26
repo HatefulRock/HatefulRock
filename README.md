@@ -25,7 +25,7 @@ I like to build.
 | [**MoveIn**](https://pierreblachere.com/projects/movein) | finished | keeps one move organised and produces a move-in/move-out condition report for the landlord · React Native · SQLite |
 | [**Nett**](https://pierreblachere.com/projects/nett) | testing | combines statements from several bank accounts and cards to show where the money goes, read-only · Rust · React |
 | [**Omnideck**](https://pierreblachere.com/projects/omnideck) | building | self-hosted control plane for narrow background AI agents: models only propose, policy code and a human decide · Python · Temporal |
-| [**github-skyline-3d**](https://github.com/HatefulRock/github-skyline-3d) | live · open source | renders a year of contributions as a 3D skyline (the one below) · TypeScript |
+| [**github-skyline-3d**](https://github.com/HatefulRock/github-skyline-3d) | live · open source | renders a year of contributions as a 3D Singapore skyline, with a koi in the bay (the one below) · TypeScript · Rust |
 
 <sub>· most repos are private · one-paragraph write-ups for every project at <a href="https://pierreblachere.com/projects">pierreblachere.com</a></sub>
 
@@ -35,9 +35,10 @@ I like to build.
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/HatefulRock/github-skyline-3d/main/screenshot.png" alt="3D contribution skyline, Singapore theme" width="100%" />
+<img src="https://raw.githubusercontent.com/HatefulRock/github-skyline-3d/main/skyline.webp" alt="3D contribution skyline, Singapore theme, with a koi swimming in Marina Bay" width="100%" />
 
-<sub>real contribution data, rendered in 3D · <a href="https://github.com/HatefulRock/github-skyline-3d">source + interactive version</a></sub>
+<sub>real contribution data, rendered in 3D and redrawn daily · <a href="https://github.com/HatefulRock/github-skyline-3d">source + interactive version</a></sub><br />
+<sub>the koi in the bay is drawn from my activity by <a href="https://github.com/yalongwastaken/git-koi">git-koi</a>, made by Anthony Yalong (MIT)</sub>
 
 </div>
 
